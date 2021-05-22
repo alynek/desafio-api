@@ -71,6 +71,21 @@ $(document).ready(function(){
     }
 })
 
+function adicionaPessoa(){
+    $('#salvar').click(function(){
+        console.log($('#inputNome').val())
+        console.log($('#inputData').val())
+        console.log($('#inputCheckbox').prop('checked'))
+        $(':input').val('')
+    })
+}
+
+adicionaPessoa()
+
+    
+
+   
+
 
 
 
