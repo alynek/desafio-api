@@ -15,9 +15,5 @@ namespace PeopleApi.Models
         public DateTime DataNascimento { get; set; }
 
         public bool Ativo { get; set; }
-
-        public int FaixaEtariaId { get; set; }
-
-        public FaixaEtaria FaixaEtaria { get; set; }
     }
 }

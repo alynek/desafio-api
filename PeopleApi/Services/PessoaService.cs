@@ -2,7 +2,6 @@
 using PeopleApi.Data;
 using PeopleApi.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PeopleApi.Services
@@ -17,17 +16,13 @@ namespace PeopleApi.Services
 
         public async Task<List<Pessoa>> ObterTodos()
         {
-            var pessoas = await _contexto.Pessoas
-                .Include(x => x.FaixaEtaria)
-                .ToListAsync();
+            var pessoas = await _contexto.Pessoas.ToListAsync();
             return pessoas;
         }
 
         public async Task<Pessoa> ObterPorId(int id)
         {
-            var pessoa =  await _contexto.Pessoas
-                .Include(x => x.FaixaEtaria)
-                .FirstOrDefaultAsync(x => x.Id == id);
+            var pessoa = await _contexto.Pessoas.FirstOrDefaultAsync(x => x.Id == id);
 
             return pessoa;
         }

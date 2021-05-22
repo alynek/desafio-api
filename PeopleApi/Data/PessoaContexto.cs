@@ -8,7 +8,5 @@ namespace PeopleApi.Data
         public PessoaContexto(DbContextOptions<PessoaContexto> options) : base(options){}
 
         public DbSet<Pessoa> Pessoas { get; set; }
-
-        public DbSet<FaixaEtaria> FaixasEtarias { get; set; }
     }
 }
