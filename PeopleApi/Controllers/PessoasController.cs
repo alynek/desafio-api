@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PeopleApi.Data;
 using PeopleApi.Models;
+using PeopleApi.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,38 +10,52 @@ namespace PeopleApi.Controllers
     [ApiController]
     public class PessoasController : ControllerBase
     {
-        private readonly PessoaContexto _pessoaContexto;
-        public PessoasController(PessoaContexto pessoaContexto)
+        private readonly PessoaService _pessoaService;
+        public PessoasController(PessoaService pessoaService)
         {
-            _pessoaContexto = pessoaContexto;
+            _pessoaService = pessoaService;
         }
 
         [HttpGet]
-        public List<Pessoa> Get()
+        public async Task<List<Pessoa>> Get()
         {
-            var pessoas =  _pessoaContexto.
+            return await _pessoaService.ObterTodos();
         }
 
         [HttpGet("{id}")]
-        public Pessoa Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var pessoa =  _pessoaContexto.Pessoas.Find(id);
-            return pessoa;
+            return Ok(await _pessoaService.ObterPorId(id));
         }
 
         [HttpPost]
-        public void Post(Pessoa pessoa)
+        public async Task<IActionResult> Post(Pessoa pessoa)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            await _pessoaService.Adicionar(pessoa);
+
+            return Ok(pessoa);
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Pessoa pessoa)
+        public async Task<IActionResult> Put(int id, [FromBody] Pessoa pessoa)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            await _pessoaService.Atualizar(pessoa);
+
+            return Ok(pessoa);
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            await _pessoaService.Remover(id);
+
+            return Ok();
         }
     }
 }
