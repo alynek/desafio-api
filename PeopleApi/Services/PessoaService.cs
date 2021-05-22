@@ -17,7 +17,9 @@ namespace PeopleApi.Services
 
         public async Task<List<Pessoa>> ObterTodos()
         {
-            var pessoas = await _contexto.Pessoas.ToListAsync();
+            var pessoas = await _contexto.Pessoas
+                .Include(x => x.FaixaEtaria)
+                .ToListAsync();
             return pessoas;
         }
 

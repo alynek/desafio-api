@@ -19,12 +19,5 @@ namespace PeopleApi.Models
         public int FaixaEtariaId { get; set; }
 
         public FaixaEtaria FaixaEtaria { get; set; }
-
-
-        public int MostrarIdade()
-        {
-            int anoAtual = DateTime.Now.Year;
-            return anoAtual - this.DataNascimento.Year;
-        }
     }
 }
