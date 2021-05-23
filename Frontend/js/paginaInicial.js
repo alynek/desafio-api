@@ -29,6 +29,8 @@ function criarTabela(elemento){
         "<td>"+idade+"</td>" +
         "<td>"+faixaEtaria+"</td>" +
         "<td>"+ativo+"</td>" +
+        "<td><button type='button' class='btn btn-warning'><i class='fas fa-pencil-alt'></button></td>" +
+        "<td><button type='button' class='btn btn-danger'><i class='fas fa-trash'></i></button></td>" +
         "</tr>"
     
     )           
