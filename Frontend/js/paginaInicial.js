@@ -1,20 +1,23 @@
+let peopleApi = 'https://localhost:44323/api/pessoas'
 
 $(document).ready(function(){
 
-    $.get("https://localhost:44323/api/pessoas", function(resposta){
-        criarTabela(resposta)
+    $.get(peopleApi, function(resposta){
+        $.each(resposta, function(indice, elemento){
+            criarTabela(elemento)
+        })
     })
 
-    function criarTabela(resposta){
+    function criarTabela(elemento){
 
-        let ativo = alterarAtivo(resposta)
-        let idade = calcularIdade(resposta)
+        let ativo = alterarAtivo(elemento)
+        let idade = calcularIdade(elemento)
         let faixaEtaria = calcularFaixaEtaria(idade)
 
         $('#tbody').append(
             "<tr>" +
-            "<td>"+resposta[0].nome+"</td>"+
-            "<td>"+resposta[0].dataNascimento+"</td>" +
+            "<td>"+elemento.nome+"</td>"+
+            "<td>"+elemento.dataNascimento+"</td>" +
             "<td>"+idade+"</td>" +
             "<td>"+faixaEtaria+"</td>" +
             "<td>"+ativo+"</td>" +
@@ -23,19 +26,19 @@ $(document).ready(function(){
         )           
     }
 
-    function alterarAtivo(resposta){
+    function alterarAtivo(elemento){
 
-        if(resposta[0].ativo == true){
+        if(elemento.ativo == true){
             return 'Sim'
         }else{
             return 'Não'
         }
     }
 
-    function calcularIdade(resposta){
+    function calcularIdade(elemento){
 
         let anoAtual = new Date().getFullYear()
-        let arrayIdade = resposta[0].dataNascimento.split('-')
+        let arrayIdade = elemento.dataNascimento.split('-')
         return anoAtual - parseInt(arrayIdade[0])
     }
 
@@ -71,16 +74,29 @@ $(document).ready(function(){
     }
 })
 
-function adicionaPessoa(){
+function adicionarPessoa(){
     $('#salvar').click(function(){
-        console.log($('#inputNome').val())
-        console.log($('#inputData').val())
-        console.log($('#inputCheckbox').prop('checked'))
+
+        let nome = $('#inputNome').val()
+        let dataNascimento = $('#inputData').val()
+        let ativo = $('#inputCheckbox').prop('checked')   
+
+        $.ajax({
+            type: "POST",
+            data :JSON.stringify({
+                "nome": nome,
+                "dataNascimento": dataNascimento,
+                "ativo": ativo
+            }),
+            url: peopleApi,
+            contentType: "application/json"
+        });
+
         $(':input').val('')
     })
 }
 
-adicionaPessoa()
+adicionarPessoa()
 
     
 
