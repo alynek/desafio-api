@@ -55,7 +55,7 @@ namespace PeopleApi.Controllers
 
             await _pessoaService.Remover(id);
 
-            return Ok(pessoa);
+            return Ok();
         }
     }
 }
