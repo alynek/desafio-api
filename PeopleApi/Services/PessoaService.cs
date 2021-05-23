@@ -2,6 +2,7 @@
 using PeopleApi.Data;
 using PeopleApi.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PeopleApi.Services
@@ -16,7 +17,7 @@ namespace PeopleApi.Services
 
         public async Task<List<Pessoa>> ObterTodos()
         {
-            var pessoas = await _contexto.Pessoas.ToListAsync();
+            var pessoas = await _contexto.Pessoas.Where(x => x.Ativo == true).ToListAsync();
             return pessoas;
         }
 
