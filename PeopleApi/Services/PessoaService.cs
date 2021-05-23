@@ -45,21 +45,32 @@ namespace PeopleApi.Services
             return objetoEditado;
         }
 
-        public async Task Atualizar(Pessoa pessoa)
+        public async Task<Pessoa> Atualizar(Pessoa pessoa)
         {
-            bool pessoaExiste = await _contexto.Pessoas.AnyAsync(x => x.Id == pessoa.Id);
+            ADODb ado = new ADODb();
 
-            if (!pessoaExiste) throw new KeyNotFoundException("Pessoa não encontrada!");
+            var query = $@"update Pessoas set 
+            Nome = '{pessoa.Nome}', DataNascimento = '{pessoa.DataNascimento}', Ativo = '{pessoa.Ativo}'
+            where Id = {pessoa.Id};";
+            ado.ExecutaQuery<Pessoa>(query);
 
-            try
-            {
-                _contexto.Update(pessoa);
-                await _contexto.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException erro)
-            {
-                throw new DbUpdateConcurrencyException(erro.Message);
-            }
+            await ObterPorId(pessoa.Id);
+            return pessoa;
+
+
+            //bool pessoaExiste = await _contexto.Pessoas.AnyAsync(x => x.Id == pessoa.Id);
+
+            //if (!pessoaExiste) throw new KeyNotFoundException("Pessoa não encontrada!");
+
+            //try
+            //{
+            //    _contexto.Update(pessoa);
+            //    await _contexto.SaveChangesAsync();
+            //}
+            //catch (DbUpdateConcurrencyException erro)
+            //{
+            //    throw new DbUpdateConcurrencyException(erro.Message);
+            //}
         }
     }
 }
