@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
+using PeopleApi.Models;
 using System;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PeopleApi.Data
 {
@@ -18,22 +19,39 @@ namespace PeopleApi.Data
             }
         }
 
-        public void ExecutaQuery<T>(string queryString)
+        public async Task<Pessoa> ExecutaQuery<T>(string queryString)
         {
             try
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
                 connection.Open();
-                command.CommandTimeout = 9600;
 
-                SqlDataReader reader = command.ExecuteReader();
+                SqlDataReader reader =  command.ExecuteReader();
+
+                Pessoa pessoa = null;
+
+                if (reader.Read())
+                {
+                        pessoa = new Pessoa
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        Nome = Convert.ToString(reader["Nome"]),
+                        DataNascimento = Convert.ToDateTime(reader["DataNascimento"]),
+                        Ativo = Convert.ToBoolean(reader["Ativo"])
+                    };
+                        
+                }
 
                 reader.Close();
-                connection.Close();
+                return pessoa;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw;
+            }
+            finally
+            {
+                connection.Close();
             }
         }
     }
