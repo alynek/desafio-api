@@ -84,23 +84,24 @@ function calcularFaixaEtaria(idade){
 function adicionarPessoa(){
     $('#salvar').click(function(){
 
-        let nome = $('#inputNome').val()
-        let dataNascimento = $('#inputData').val()
-        let ativo = $('#inputCheckbox').prop('checked')   
-
-         $.ajax({
-            type: "POST",
-            url: peopleApi,
-            contentType: "application/json",
-            data :JSON.stringify({
-                "nome": nome,
-                "dataNascimento": dataNascimento,
-                "ativo": ativo
-            }),
+        let dados = {
+            nome: $('#nome').val(), 
+            dataNascimento: $('#dataNascimento').val(),
+            ativo: $('#ativo').prop('checked')
+        }
+        
+         $.ajax(peopleApi, {
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(dados),
             success: function(){
                 obterPessoa()
+            },
+            error: function(){
+                alert('Dados inválidos!')
             }
         });
+            
         $(':input').val('')
     })
 }
