@@ -34,15 +34,23 @@ namespace PeopleApi.Services
             await _contexto.SaveChangesAsync();
         }
 
+        public async Task<Pessoa> ObterPessoaViaQuery(int id)
+        {
+            ADODb ado = new ADODb();
+
+            var query = $@"select * from Pessoas where Id = {id}";
+
+            return await ado.ExecutaQuery<Pessoa>(query);
+        }
+
         public async Task<Pessoa> Remover(int id)
         {
-            Pessoa objetoEditado = await _contexto.Pessoas.FindAsync(id);
+            Pessoa pessoa = await ObterPessoaViaQuery(id);
 
-            objetoEditado.Ativo = false;
-            _contexto.Update(objetoEditado);
-            await _contexto.SaveChangesAsync();
+            pessoa.Ativo = false;
+            await Atualizar(pessoa);
 
-            return objetoEditado;
+            return pessoa;
         }
 
         public async Task<Pessoa> Atualizar(Pessoa pessoa)
@@ -52,25 +60,11 @@ namespace PeopleApi.Services
             var query = $@"update Pessoas set 
             Nome = '{pessoa.Nome}', DataNascimento = '{pessoa.DataNascimento}', Ativo = '{pessoa.Ativo}'
             where Id = {pessoa.Id};";
-            ado.ExecutaQuery<Pessoa>(query);
 
-            await ObterPorId(pessoa.Id);
-            return pessoa;
+            await ado.ExecutaQuery<Pessoa>(query);
 
-
-            //bool pessoaExiste = await _contexto.Pessoas.AnyAsync(x => x.Id == pessoa.Id);
-
-            //if (!pessoaExiste) throw new KeyNotFoundException("Pessoa não encontrada!");
-
-            //try
-            //{
-            //    _contexto.Update(pessoa);
-            //    await _contexto.SaveChangesAsync();
-            //}
-            //catch (DbUpdateConcurrencyException erro)
-            //{
-            //    throw new DbUpdateConcurrencyException(erro.Message);
-            //}
+            var pessoaAtualizada = await ObterPessoaViaQuery(pessoa.Id);
+            return pessoaAtualizada;
         }
     }
 }

@@ -41,7 +41,7 @@ namespace PeopleApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Pessoa pessoa)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return  BadRequest(ModelState);
 
             await _pessoaService.Atualizar(pessoa);
 
@@ -55,7 +55,7 @@ namespace PeopleApi.Controllers
 
             await _pessoaService.Remover(id);
 
-            return Ok();
+            return Ok(pessoa);
         }
     }
 }
