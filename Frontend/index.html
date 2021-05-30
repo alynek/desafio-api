@@ -51,7 +51,58 @@
                 </div>
               </div>
             </div>
+        </div>
+        <div class="modal" tabindex="-1" role="dialog" id="modalEditar">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Editar Pessoa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+                <div>
+                    <form id="formModal">
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" class="form-control" id="nome" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="dataNascimento">Data de Nascimento</label>
+                            <input type="date" class="form-control" id="dataNascimento" value="">
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="ativo" value="">
+                            <label class="form-check-label" for="ativo">Ativo</label>
+                        </div>
+                    </form>
+                </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" id="salvar" data-dismiss="modal">Salvar</button>
+              </div>
+            </div>
           </div>
+      </div>
+      <div class="modal" tabindex="-1" role="dialog" id="modalRemover">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Remover Pessoa</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Tem certeza que quer remover essa pessoa?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Salvar</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="container">
         <div class="row mt-5">
