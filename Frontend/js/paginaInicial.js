@@ -4,6 +4,8 @@ $(document).ready(function(){
    
     obterPessoa()
     adicionarPessoa()
+
+    
 })    
 
 function obterPessoa(){
@@ -12,6 +14,8 @@ function obterPessoa(){
         $.each(resposta, function(indice, elemento){
             criarTabela(elemento)
         })
+        editarPessoa()
+        removerPessoa()
     })
 }
 
@@ -29,11 +33,11 @@ function criarTabela(elemento){
         "<td>"+idade+"</td>" +
         "<td>"+faixaEtaria+"</td>" +
         "<td>"+ativo+"</td>" +
-        "<td><button type='button' class='btn btn-warning'><i class='fas fa-pencil-alt'></button></td>" +
-        "<td><button type='button' class='btn btn-danger'><i class='fas fa-trash'></i></button></td>" +
+        "<td><button type='button' class='btn btn-warning editar'><i class='fas fa-pencil-alt'></button></td>" +
+        "<td><button type='button' class='btn btn-danger remover'><i class='fas fa-trash'></i></button></td>" +
         "</tr>"
     
-    )           
+    )       
 }
 
 function alterarAtivo(elemento){
@@ -107,6 +111,20 @@ function adicionarPessoa(){
         $(':input').val('')
     })
 }
+
+function editarPessoa(){
+    $('.editar').click(function(){
+        $('#modalEditar').modal('show')
+        console.log('editar')
+    })
+}
+
+function removerPessoa(){
+    $('.remover').click(function(){
+        $('#modalRemover').modal('show')
+    })
+}
+
 
 
 
