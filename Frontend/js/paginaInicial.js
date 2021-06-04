@@ -4,40 +4,43 @@ $(document).ready(function(){
    
     obterPessoa()
     adicionarPessoa()
-
     
-})    
+}) 
+
 
 function obterPessoa(){
+
     $('#tbody').empty()
-    $.get(peopleApi, function(resposta){
-        $.each(resposta, function(indice, elemento){
-            criarTabela(elemento)
-        })
-        editarPessoa()
-        removerPessoa()
+
+    $.ajax(peopleApi, {
+        type: 'GET',
+        success: function(resposta){
+            criarTabela(resposta)
+        }
     })
 }
 
-function criarTabela(elemento){
-    
-    let ativo = alterarAtivo(elemento)
-    let idade = calcularIdade(elemento)
-    let faixaEtaria = calcularFaixaEtaria(idade)
-    
 
-    $('#tbody').append(
-        "<tr>" +
-        "<td>"+elemento.nome+"</td>"+
-        "<td>"+elemento.dataNascimento+"</td>" +
-        "<td>"+idade+"</td>" +
-        "<td>"+faixaEtaria+"</td>" +
-        "<td>"+ativo+"</td>" +
-        "<td><button type='button' class='btn btn-warning editar'><i class='fas fa-pencil-alt'></button></td>" +
-        "<td><button type='button' class='btn btn-danger remover'><i class='fas fa-trash'></i></button></td>" +
-        "</tr>"
-    
-    )       
+
+function criarTabela(resposta){
+
+    $.each(resposta, function(indice, elemento){
+
+        let ativo = alterarAtivo(elemento)
+        let idade = calcularIdade(elemento)
+        let faixaEtaria = calcularFaixaEtaria(idade)
+        
+        $('#tbody').append(
+            "<tr>" +
+            "<td class='nome'>"+elemento.nome+"</td>"+
+            "<td class='dataNascimento'>"+elemento.dataNascimento+"</td>" +
+            "<td class='idade'>"+idade+"</td>" +
+            "<td class='faixaEtaria'>"+faixaEtaria+"</td>" +
+            "<td class='ativo'>"+ativo+"</td>" +
+            "<td><button type='button' class='btn btn-warning editar' onclick='editarPessoa("+elemento.id+")'><i class='fas fa-pencil-alt'></button></td>" +
+            "<td><button type='button' class='btn btn-danger remover' onclick='removerPessoa("+elemento.id+")'><i class='fas fa-trash'></i></button></td>" +
+            "</tr>")
+    })
 }
 
 function alterarAtivo(elemento){
@@ -88,15 +91,15 @@ function calcularFaixaEtaria(idade){
 }
 
 function adicionarPessoa(){
-    $('#salvar').click(function(){
 
+    $('#salvarCriar').click(function(){
         let dados = {
             nome: $('#nome').val(), 
             dataNascimento: $('#dataNascimento').val(),
             ativo: $('#ativo').prop('checked')
         }
         
-         $.ajax(peopleApi, {
+            $.ajax(peopleApi, {
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(dados),
@@ -107,24 +110,59 @@ function adicionarPessoa(){
                 alert('Dados inválidos!')
             }
         });
-            
         $(':input').val('')
     })
 }
 
-function editarPessoa(){
-    $('.editar').click(function(){
-        $('#modalEditar').modal('show')
-        console.log('editar')
+function editarPessoa(id){
+
+    $('#modalEditar').modal('show')
+    $('#modalEditar :input').val('')
+
+    $('#salvarEditar').click(function(){
+
+        let dados = {
+            id: id,
+            nome: $('#modalEditar #nome').val(), 
+            dataNascimento: $('#modalEditar #dataNascimento').val(),
+            ativo: $('#modalEditar #ativo').prop('checked')
+        }
+        
+        $.ajax(peopleApi + '/' + id, {
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(dados),
+            success: function(dados){
+                obterPessoa(dados)
+            },
+            error: function(){
+                alert('Dados inválidos!')
+            }
+        });
+        
     })
 }
 
-function removerPessoa(){
-    $('.remover').click(function(){
-        $('#modalRemover').modal('show')
+function removerPessoa(id){
+
+    $('#modalRemover').modal('show')
+
+    $('#salvarRemover').click(function(){
+        
+        $.ajax(peopleApi + '/' + id, {
+            type: 'DELETE',
+            contentType: 'application/json',
+            data: 'json',
+            success: function(dados){
+                obterPessoa(dados)
+            },
+            error: function(){
+                alert('Dados inválidos!')
+            }
+        });
     })
 }
-
+    
 
 
 
