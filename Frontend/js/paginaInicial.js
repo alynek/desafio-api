@@ -1,28 +1,20 @@
 let peopleApi = 'https://localhost:44323/api/pessoas'
-
-$(document).ready(function(){
    
-    obterPessoa()
-    adicionarPessoa()
-    
-}) 
+//obterPessoa()
+adicionarPessoa()
 
-
-function obterPessoa(){
-
-    $('#tbody').empty()
-
-    $.ajax(peopleApi, {
-        type: 'GET',
-        success: function(resposta){
-            criarTabela(resposta)
-        }
-    })
+async function obterPessoa(){
+    let resposta =  await $.get(peopleApi)
+    return resposta
 }
 
-
+obterPessoa().then(resposta => {
+    criarTabela(resposta)
+})
 
 function criarTabela(resposta){
+
+    $('#tbody').empty()
 
     $.each(resposta, function(indice, elemento){
 
@@ -117,9 +109,11 @@ function adicionarPessoa(){
 function editarPessoa(id){
 
     $('#modalEditar').modal('show')
-    $('#modalEditar :input').val('')
+    $('#modalEditar :input').val('') 
 
-    $('#salvarEditar').click(function(){
+    $('#salvarEditar').off('click')
+
+    $('#salvarEditar').on('click', (function(){
 
         let dados = {
             id: id,
@@ -132,36 +126,40 @@ function editarPessoa(id){
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(dados),
-            success: function(dados){
-                obterPessoa(dados)
+            success: function(){
+                obterPessoa().then(resposta => {
+                    criarTabela(resposta)
+                })
             },
             error: function(){
                 alert('Dados inválidos!')
             }
         });
-        
     })
-}
+)}
+
 
 function removerPessoa(id){
 
     $('#modalRemover').modal('show')
 
-    $('#salvarRemover').click(function(){
+    $('#salvarRemover').off('click')
+
+    $('#salvarRemover').on('click', (function(){
         
         $.ajax(peopleApi + '/' + id, {
             type: 'DELETE',
             contentType: 'application/json',
             data: 'json',
             success: function(dados){
-                obterPessoa(dados)
+                criarTabela(dados)
             },
             error: function(){
                 alert('Dados inválidos!')
             }
         });
     })
-}
+)}
     
 
 
