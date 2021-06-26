@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PeopleApi.Data;
-using PeopleApi.Services;
+using PeopleApi.Repository;
 
 namespace PeopleApi
 {
@@ -26,8 +26,6 @@ namespace PeopleApi
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddScoped<PessoaService>();
-
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
@@ -41,6 +39,9 @@ namespace PeopleApi
             });
 
             services.AddControllers();
+
+            services.AddScoped<PessoaContexto>();
+            services.AddScoped<IPessoaRepository, PessoaRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

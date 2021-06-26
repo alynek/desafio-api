@@ -12,7 +12,7 @@ namespace PeopleApi.Data
         {
             try
             {
-                connection = new SqlConnection("Data Source=DESKTOP-OE806TC\\SQLEXPRESS;Initial Catalog=PeopleDb;Integrated Security=true");
+                connection = new SqlConnection("Data Source=ALYNE\\SQLEXPRESS;Initial Catalog=PeopleDb;Integrated Security=true");
             }
             catch (Exception ex)
             {

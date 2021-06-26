@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NhlEN50LH6nPUJSHFqgct7C5AFc0YFGLmduVUXuIFXNTo3jsWc8NVRugISZx0NQlEX3IwqfdUC7tImuSYRifyQ==",
+  "dgSpecHash": "5ypuenePLmVNU9739J9ZkR4iolsHRRapy9puhwP82i+iKq/4zQuBFmjR9zaaaxtozgAaJRmZldJWNKc01zw5yg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\alyne\\projects\\PeopleApi\\PeopleApi\\PeopleApi.csproj",
+  "projectFilePath": "C:\\Users\\alyne\\projects\\desafio-api\\PeopleApi\\PeopleApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alyne\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\alyne\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.0\\microsoft.aspnetcore.jsonpatch.3.1.0.nupkg.sha512",

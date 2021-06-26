@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\alyne\\projects\\PeopleApi\\PeopleApi\\PeopleApi.csproj": {}
+    "C:\\Users\\alyne\\projects\\desafio-api\\PeopleApi\\PeopleApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\alyne\\projects\\PeopleApi\\PeopleApi\\PeopleApi.csproj": {
+    "C:\\Users\\alyne\\projects\\desafio-api\\PeopleApi\\PeopleApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alyne\\projects\\PeopleApi\\PeopleApi\\PeopleApi.csproj",
+        "projectUniqueName": "C:\\Users\\alyne\\projects\\desafio-api\\PeopleApi\\PeopleApi.csproj",
         "projectName": "PeopleApi",
-        "projectPath": "C:\\Users\\alyne\\projects\\PeopleApi\\PeopleApi\\PeopleApi.csproj",
+        "projectPath": "C:\\Users\\alyne\\projects\\desafio-api\\PeopleApi\\PeopleApi.csproj",
         "packagesPath": "C:\\Users\\alyne\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alyne\\projects\\PeopleApi\\PeopleApi\\obj\\",
+        "outputPath": "C:\\Users\\alyne\\projects\\desafio-api\\PeopleApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\alyne\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -85,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }

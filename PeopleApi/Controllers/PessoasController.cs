@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PeopleApi.Models;
-using PeopleApi.Services;
+using PeopleApi.Repository;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,22 +10,22 @@ namespace PeopleApi.Controllers
     [ApiController]
     public class PessoasController : ControllerBase
     {
-        private readonly PessoaService _pessoaService;
-        public PessoasController(PessoaService pessoaService)
+        private readonly IPessoaRepository _pessoaRepository;
+        public PessoasController(IPessoaRepository pessoaRepository)
         {
-            _pessoaService = pessoaService;
+            _pessoaRepository = pessoaRepository;
         }
 
         [HttpGet]
         public async Task<List<Pessoa>> Get()
         {
-            return await _pessoaService.ObterTodos();
+            return await _pessoaRepository.ObterTodos();
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok(await _pessoaService.ObterPorId(id));
+            return Ok(await _pessoaRepository.ObterPorId(id));
         }
 
         [HttpPost]
@@ -33,7 +33,7 @@ namespace PeopleApi.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            await _pessoaService.Adicionar(pessoa);
+            await _pessoaRepository.Adicionar(pessoa);
 
             return Ok(pessoa);
         }
@@ -43,7 +43,7 @@ namespace PeopleApi.Controllers
         {
             if (!ModelState.IsValid) return  BadRequest(ModelState);
 
-            await _pessoaService.Atualizar(pessoa);
+            await _pessoaRepository.Atualizar(pessoa);
 
             return Ok(pessoa);
         }
@@ -53,7 +53,7 @@ namespace PeopleApi.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            await _pessoaService.Remover(id);
+            await _pessoaRepository.Remover(id);
 
             return Ok();
         }
