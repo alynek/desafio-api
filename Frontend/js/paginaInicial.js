@@ -5,12 +5,10 @@ adicionarPessoa()
 
 async function obterPessoa(){
     let resposta =  await $.get(peopleApi)
-    return resposta
+    criarTabela(resposta)
 }
 
-obterPessoa().then(resposta => {
-    criarTabela(resposta)
-})
+obterPessoa()
 
 function criarTabela(resposta){
 
