@@ -1,14 +1,90 @@
-let peopleApi = 'https://localhost:44323/api/pessoas'
-   
-//obterPessoa()
-adicionarPessoa()
+const peopleApi = 'https://localhost:44323/api/pessoas'
 
-async function obterPessoa(){
-    let resposta =  await $.get(peopleApi)
-    criarTabela(resposta)
+$(document).ready(function(){
+    pessoa.obterTodos()
+})
+
+const pessoa = {
+
+    obterTodos(){
+        $.get(peopleApi, function(resultado){
+            criarTabela(resultado)
+        })
+    },
+
+    salvar(){
+
+        let dados = pessoa.obterCamposDoInput('#modalCriar')
+        
+        $.ajax(peopleApi, {
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(dados),
+            success: function(){
+                pessoa.obterTodos()
+            },
+            error: function(){
+                alert('Dados inválidos!')
+            }
+        });
+
+        $(':input').val('')
+    },
+
+    obterCamposDoInput(idDoModal){
+
+        let dados = {
+            nome: $(`${idDoModal} #nome`).val(), 
+            dataNascimento: $(`${idDoModal} #dataNascimento`).val(),
+            ativo: $(`${idDoModal} #ativo`).prop('checked')
+        }
+
+        return dados
+    },
+
+    remover(id){
+
+        $('#modalRemover').modal('show')
+
+        $('#salvarRemover').off().on('click', (function(){
+            
+            $.ajax(peopleApi + '/' + id, {
+                type: 'DELETE',
+                contentType: 'application/json',
+                data: 'json',
+                success: function(dados){
+                    pessoa.obterTodos()
+                },
+                error: function(){
+                    alert('Dados inválidos!')
+                }
+            });
+        }));
+    },
+
+    editar(id){
+        $('#modalEditar').modal('show')
+        $('#modalEditar :input').val('') 
+
+        $('#salvarEditar').off().on('click', (function(){
+
+            let dados = pessoa.obterCamposDoInput('#modalEditar')
+            
+            $.ajax(peopleApi + '/' + id, {
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify(dados),
+                success: function(){
+                    pessoa.obterTodos()
+                },
+                error: function(){
+                    alert('Dados inválidos!')
+                }
+            });
+        }));
+    }
 }
 
-obterPessoa()
 
 function criarTabela(resposta){
 
@@ -27,8 +103,8 @@ function criarTabela(resposta){
             "<td class='idade'>"+idade+"</td>" +
             "<td class='faixaEtaria'>"+faixaEtaria+"</td>" +
             "<td class='ativo'>"+ativo+"</td>" +
-            "<td><button type='button' class='btn btn-warning editar' onclick='editarPessoa("+elemento.id+")'><i class='fas fa-pencil-alt'></button></td>" +
-            "<td><button type='button' class='btn btn-danger remover' onclick='removerPessoa("+elemento.id+")'><i class='fas fa-trash'></i></button></td>" +
+            "<td><button type='button' class='btn btn-warning editar' onclick='pessoa.editar("+elemento.id+")'><i class='fas fa-pencil-alt'></button></td>" +
+            "<td><button type='button' class='btn btn-danger remover' onclick='pessoa.remover("+elemento.id+")'><i class='fas fa-trash'></i></button></td>" +
             "</tr>")
     })
 }
@@ -79,85 +155,6 @@ function calcularFaixaEtaria(idade){
             return '120-129';
     }
 }
-
-function adicionarPessoa(){
-
-    $('#salvarCriar').click(function(){
-        let dados = {
-            nome: $('#nome').val(), 
-            dataNascimento: $('#dataNascimento').val(),
-            ativo: $('#ativo').prop('checked')
-        }
-        
-            $.ajax(peopleApi, {
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(dados),
-            success: function(){
-                obterPessoa()
-            },
-            error: function(){
-                alert('Dados inválidos!')
-            }
-        });
-        $(':input').val('')
-    })
-}
-
-function editarPessoa(id){
-
-    $('#modalEditar').modal('show')
-    $('#modalEditar :input').val('') 
-
-    $('#salvarEditar').off('click')
-
-    $('#salvarEditar').on('click', (function(){
-
-        let dados = {
-            id: id,
-            nome: $('#modalEditar #nome').val(), 
-            dataNascimento: $('#modalEditar #dataNascimento').val(),
-            ativo: $('#modalEditar #ativo').prop('checked')
-        }
-        
-        $.ajax(peopleApi + '/' + id, {
-            type: 'PUT',
-            contentType: 'application/json',
-            data: JSON.stringify(dados),
-            success: function(){
-                obterPessoa().then(resposta => {
-                    criarTabela(resposta)
-                })
-            },
-            error: function(){
-                alert('Dados inválidos!')
-            }
-        });
-    })
-)}
-
-
-function removerPessoa(id){
-
-    $('#modalRemover').modal('show')
-
-    $('#salvarRemover').off('click')
-
-    $('#salvarRemover').on('click', (function(){
-        
-        $.ajax(peopleApi + '/' + id, {
-            type: 'DELETE',
-            contentType: 'application/json',
-            data: 'json',
-            success: function(dados){
-                criarTabela(dados)
-            },
-            error: function(){
-                alert('Dados inválidos!')
-            }
-        });
-    })
-)}
     
 
 
