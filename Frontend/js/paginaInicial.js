@@ -15,6 +15,7 @@ const pessoa = {
     salvar(){
 
         let dados = pessoa.obterCamposDoInput('#modalCriar')
+        dados.ativo = true
         
         $.ajax(peopleApi, {
             type: 'POST',
