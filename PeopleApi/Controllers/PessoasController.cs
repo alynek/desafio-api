@@ -25,7 +25,11 @@ namespace PeopleApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok(await _pessoaRepository.ObterPorId(id));
+            var pessoa = await _pessoaRepository.ObterPorId(id);
+
+            if(pessoa == null) return NotFound();
+
+            return Ok(pessoa);
         }
 
         [HttpPost]
@@ -43,19 +47,21 @@ namespace PeopleApi.Controllers
         {
             if (!ModelState.IsValid) return  BadRequest(ModelState);
 
-            await _pessoaRepository.Atualizar(pessoa);
+            var pessoaAtualizada = await _pessoaRepository.Atualizar(pessoa, id);
 
-            return Ok(pessoa);
+            return Ok(pessoaAtualizada);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var pessoa = await _pessoaRepository.ObterPorId(id);
 
-            await _pessoaRepository.Remover(id);
+            if (pessoa == null) return NotFound();
 
-            return Ok();
+            await _pessoaRepository.Remover(pessoa.Id);
+
+            return NoContent();
         }
     }
 }

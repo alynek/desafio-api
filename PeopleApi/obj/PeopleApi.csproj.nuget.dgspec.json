@@ -1,18 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\alyne\\projects\\desafio-api\\PeopleApi\\PeopleApi.csproj": {}
+    "C:\\projects\\desafio-api\\PeopleApi\\PeopleApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\alyne\\projects\\desafio-api\\PeopleApi\\PeopleApi.csproj": {
+    "C:\\projects\\desafio-api\\PeopleApi\\PeopleApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alyne\\projects\\desafio-api\\PeopleApi\\PeopleApi.csproj",
+        "projectUniqueName": "C:\\projects\\desafio-api\\PeopleApi\\PeopleApi.csproj",
         "projectName": "PeopleApi",
-        "projectPath": "C:\\Users\\alyne\\projects\\desafio-api\\PeopleApi\\PeopleApi.csproj",
+        "projectPath": "C:\\projects\\desafio-api\\PeopleApi\\PeopleApi.csproj",
         "packagesPath": "C:\\Users\\alyne\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alyne\\projects\\desafio-api\\PeopleApi\\obj\\",
+        "outputPath": "C:\\projects\\desafio-api\\PeopleApi\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
           "C:\\Users\\alyne\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -85,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

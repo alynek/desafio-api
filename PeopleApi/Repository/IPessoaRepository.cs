@@ -11,6 +11,6 @@ namespace PeopleApi.Repository
         Task Adicionar(Pessoa pessoa);
         Task<Pessoa> ObterPessoaViaQuery(int id);
         Task<Pessoa> Remover(int id);
-        Task<Pessoa> Atualizar(Pessoa pessoa);
+        Task<Pessoa> Atualizar(Pessoa pessoa, int Id);
     }
 }

@@ -48,22 +48,22 @@ namespace PeopleApi.Repository
             Pessoa pessoa = await ObterPessoaViaQuery(id);
 
             pessoa.Ativo = false;
-            await Atualizar(pessoa);
+            await Atualizar(pessoa, id);
 
             return pessoa;
         }
 
-        public async Task<Pessoa> Atualizar(Pessoa pessoa)
+        public async Task<Pessoa> Atualizar(Pessoa pessoa, int id)
         {
             ADODb ado = new ADODb();
 
             var query = $@"update Pessoas set 
             Nome = '{pessoa.Nome}', DataNascimento = '{pessoa.DataNascimento}', Ativo = '{pessoa.Ativo}'
-            where Id = {pessoa.Id};";
+            where Id = {id};";
 
             await ado.ExecutaQuery<Pessoa>(query);
 
-            var pessoaAtualizada = await ObterPessoaViaQuery(pessoa.Id);
+            var pessoaAtualizada = await ObterPessoaViaQuery(id);
             return pessoaAtualizada;
         }
     }
